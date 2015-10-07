@@ -21,23 +21,25 @@ content.shift
 content.each do |row|
   record = {
     "uid" => row[0],
-    "category" => row[1],
-    "promess" => row[2],
-    "description" => row[3],
-    "quality" => row[4],
-    "fulfillment" => row[5],
-    "ponderator" => row[6],
+    "macro_area" => row[1],
+    "category" => row[2],
+    "promess" => row[3],
+    "description" => row[4],
+    "quality" => row[5],
+    "fulfillment" => row[6],
+    "ponderator" => row[7],
     "last_update" => Date.today.to_s
   }
-  ScraperWiki.save_sqlite(["uid"], record)
-  puts "Adds new record " + record['uid']
+
+  # Save if the record doesn't exist
+  if ((ScraperWiki.select("* from data where `source`='#{record['uid']}'").empty?) rescue true)
+    ScraperWiki.save_sqlite(["uid"], record)
+    puts "Adds new record " + record['uid']
+  else
+    puts "Skipping already saved record from " + record['uid']
+  end
 end
 
-# p page.at('div.content')
-#
-# # Write out to the sqlite database using scraperwiki library
-# ScraperWiki.save_sqlite(["name"], {"name" => "susan", "occupation" => "software developer"})
-#
 # # An arbitrary query against the database
 # ScraperWiki.select("* from data where 'name'='peter'")
 
