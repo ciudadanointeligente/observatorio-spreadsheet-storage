@@ -26,7 +26,9 @@ content.each do |row|
     "promess" => row[3],
     "description" => row[4],
     "quality" => row[5],
+    "readmore_quality" => row[9],
     "fulfillment" => row[6],
+    "readmore_fulfillment" => row[8],
     "ponderator" => row[7],
     "last_update" => Date.today.to_s
   }
